@@ -1,23 +1,30 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState } from "react";
+
+import Html5QrcodeScannerPlugin from "./components/Html5QrcodeScannerPlugin";
+import "./App.css";
 
 function App() {
+  const [data, setData] = useState(null);
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h1>Сканнер</h1>
+    
+      <Html5QrcodeScannerPlugin
+        fps={10}
+        qrBox={250}
+        disableFlip={false}
+        qrCodeSuccessCallback={(mesg) => {
+          setData(mesg)
+        }}
+        qrCodeErrorCallback={(error) => {
+          console.error(error);
+        }}
+      />
+      { data && 
+      <>
+      <h3>данные с чека {data}</h3>
+      </>}
     </div>
   );
 }
